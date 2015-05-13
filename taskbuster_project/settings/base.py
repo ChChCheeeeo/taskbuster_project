@@ -9,18 +9,35 @@ https://docs.djangoproject.com/en/1.8/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
-
+#print("you are in settings.base")
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-
+from .key import SECRET_KEY
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# SEEMS TO BE CIRCULAR IMPORT PROBLEM, GO OVER WHY
+# FOR NOW USE A KEY FILE BUT ADD IT TO .gitignore
+
+# for secret key
+# from django.core.exceptions import ImproperlyConfigured
+
+# def get_env_variable(var_name):
+#     try:
+#         print("looking for {}".format(var_name))
+#         key = os.environ.get(var_name, 'default')
+#         print("returning {}".format(key))
+#         print()
+#         #print("found: ", os.environ['SECRET_KEY'])
+#         #return os.environ[var_name]
+#         return os.environ.get(var_name, 'default')
+#     except KeyError:
+#         error_msg = "Set the %s environment variable" % var_name
+#         raise ImproperlyConfigured(error_msg)
+
+# SECRET_KEY = get_env_variable('SECRET_KEY')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ')&bf)h2gii!2rf*qlrq73&j+lr!hycszpp-*)=t-eef4kv9ith'
 
 ALLOWED_HOSTS = []
 
@@ -100,3 +117,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+

@@ -91,6 +91,8 @@ docs/_build
 notes_taskbuster.rst
 TaskBuster.sublime-workspace
 pushToGit.sh
+key.py
+
 # You shouldn't commit
 # your local env directory
 
