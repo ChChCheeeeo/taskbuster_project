@@ -10,10 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 #print("you are in settings.base")
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 from .key import SECRET_KEY
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 # SEEMS TO BE CIRCULAR IMPORT PROBLEM, GO OVER WHY
 # FOR NOW USE A KEY FILE BUT ADD IT TO .gitignore
@@ -35,6 +34,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 #         raise ImproperlyConfigured(error_msg)
 
 # SECRET_KEY = get_env_variable('SECRET_KEY')
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# points to folder containing this file
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -118,3 +121,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Tell Django to look for static files in the 
+# taskbuster_project/static directory
+# With this configuration, Django will look for static files
+# in a folder named static inside each app and into the 
+# taskbuster_project/static folder
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
