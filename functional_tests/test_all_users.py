@@ -1,18 +1,21 @@
 # -*- coding: utf-8 -*-
-from django.contrib.staticfiles.testing import LiveServerTestCase
+#from django.contrib.staticfiles.testing import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.core.urlresolvers import reverse
 
-from selenium import webdriver
+from selenium.webdriver.firefox import webdriver
 import unittest
 
-class HomeNewVisitorTest(LiveServerTestCase):#unittest.TestCase):
+# LiveServerTestCase doesn't support static files
+#class HomeNewVisitorTest(LiveServerTestCase):#unittest.TestCase):
+class HomeNewVisitorTest(StaticLiveServerTestCase):
     """NewVisitorTest
     """
 
     # setUp and tearDown run before and after every
     # test_
     def setUp(self):
-        self.browser = webdriver.Firefox()
+        self.browser = webdriver.WebDriver()#Firefox()
         self.browser.implicitly_wait(3)
 
     def tearDown(self):
@@ -35,9 +38,8 @@ class HomeNewVisitorTest(LiveServerTestCase):#unittest.TestCase):
         # file, which means that if the test passes, 
         # staticfiles are loading correctly.
         self.browser.get(self.get_full_url("home"))
-        h1 = self.browser.find_element_by_tag_name("hi")
-        self.assertEqual(h1.value_of_css_property(
-            "color", 
+        h1 = self.browser.find_element_by_tag_name("h1")
+        self.assertEqual(
+            h1.value_of_css_property("color"),
             "rgba(200, 50, 255, 1)"
         )
-
