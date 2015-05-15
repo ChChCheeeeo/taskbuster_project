@@ -43,3 +43,11 @@ class HomeNewVisitorTest(StaticLiveServerTestCase):
             h1.value_of_css_property("color"),
             "rgba(200, 50, 255, 1)"
         )
+
+    def test_home_files(self):
+        # check when going to corresponding url that 
+        # Not Found 404 page doesn't show up.
+        self.browser.get(self.live_server_url + "/robots.txt")
+        self.assertNotIn("Not Found", self.browser.title)
+        self.browser.get(self.live_server_url + "/humans.txt")
+        self.assertNotIn("Not Found", self.browser.title)
