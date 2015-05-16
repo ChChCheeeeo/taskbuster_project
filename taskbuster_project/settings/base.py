@@ -60,7 +60,11 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    # default
     'django.contrib.sessions.middleware.SessionMiddleware',
+    # non default
+    'django.middleware.local.LocaleMiddleware',
+    # default
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -111,6 +115,7 @@ DATABASES = {
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
+from django.utils.translation import ugettext_lazy as _
 
 LANGUAGE_CODE = 'en-us'
 
@@ -122,6 +127,18 @@ USE_L10N = True
 
 USE_TZ = True
 
+# ugettext_lazy function is used to mark the language names 
+# for translation, it’s usual to use the function’s 
+# shortcut _. use ugettext_lazy because the other function 
+# would cause import loops. 
+LANGUAGES = (
+    ('en', _('English')),
+    ('ca', _('Catalan')),
+)
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
