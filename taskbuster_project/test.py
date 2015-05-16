@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.utils.translation import activate
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
@@ -13,5 +14,6 @@ class TestHomePage(TestCase):
             "taskbuster_project/index.html")
 
     def test_uses_base_template(self):
+        activate('en')
         response = self.client.get(reverse("home"))
         self.assertTemplateUsed(response, "base.html")

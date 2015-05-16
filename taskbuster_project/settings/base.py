@@ -63,7 +63,7 @@ MIDDLEWARE_CLASSES = (
     # default
     'django.contrib.sessions.middleware.SessionMiddleware',
     # non default
-    'django.middleware.local.LocaleMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     # default
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',

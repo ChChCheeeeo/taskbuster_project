@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 #from django.contrib.staticfiles.testing import LiveServerTestCase
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django.utils.translation import activate
 from django.core.urlresolvers import reverse
 
 from selenium.webdriver.firefox import webdriver
 import unittest
+
+
 
 # LiveServerTestCase doesn't support static files
 #class HomeNewVisitorTest(LiveServerTestCase):#unittest.TestCase):
