@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load l10n %}
+{% load tz %}
 <!--
   Inherite from base and all its contents. But have to load
   { % load staticfiles % } for each page.
@@ -56,8 +57,25 @@
         <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
      </div>
       <div class="col-md-4">
-        <h2>Heading</h2>
-        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+        <h2>Time Zones</h2>
+        <p>
+          San Jose: 
+            <span id="time-tz">
+              {{now|time:"H:i"}}
+            </span>
+        </p>
+        <p> 
+          UTC: 
+            <span id="time-utc">
+              {{now|utc|time:"H:i"}}
+            </span>
+        </p>
+        <p> 
+          Barcelona: 
+            <span id="time-ny"> 
+              {{now|timezone:"Europe/Madrid"|time:"H:i"}}
+            </span>
+        </p>
         <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
       </div>
     </div>

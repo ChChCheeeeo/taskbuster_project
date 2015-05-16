@@ -119,7 +119,7 @@ from django.utils.translation import ugettext_lazy as _
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Los_Angeles'#'UTC'
 
 USE_I18N = True
 
