@@ -107,8 +107,15 @@ WSGI_APPLICATION = 'taskbuster_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        #'ENGINE': 'django.db.backends.sqlite3',
+        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # because using psql db
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'taskbuster_db',
+        'USER': 'taskbuster_user',
+        'PASSWORD': 'taskbuster_password',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
