@@ -56,8 +56,28 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # third party
+    # The Django sites framework is required
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # Login via Google
+    'allauth.socialaccount.providers.google',
     # my apps
 )
+
+# used by Django sites framework
+SITE_ID = 1
+
+
+# make allauth to ask for the email (if possible) in the 
+# authorization process. It will ask it to Google, 
+# without any verification process, and after logging in, 
+# it will redirect the user to the home page.
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = "none"
+SOCIALACCOUNT_QUERY_EMAIL = True
+LOGIN_REDIRECT_URL = "/"
 
 MIDDLEWARE_CLASSES = (
     # default
@@ -76,6 +96,8 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'taskbuster_project.urls'
 
+# for django-allauth
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -94,10 +116,33 @@ TEMPLATES = [
                 'django.template.context_processors.tz',
                 # deafult
                 'django.contrib.messages.context_processors.messages',
+                # Third party
+                # this should work for django-allauth>=0.20.0-dev
+                # but for know use TEMPLATE_CONTEXT_PROCESSORS
+                # thrid party, required by allauth template tags
+                #"django.core.context_processors.request",
+                # allauth specific context processors
+                #"allauth.account.context_processors.account",
+                #"allauth.socialaccount.context_processors.socialaccount",
             ],
         },
     },
 ]
+
+TEMPLATE_CONTEXT_PROCESSORS += (
+    # Required by allauth template tags
+    "django.core.context_processors.request",
+    # allauth specific context processors
+    "allauth.account.context_processors.account",
+    "allauth.socialaccount.context_processors.socialaccount",
+)
+
+AUTHENTICATION_BACKENDS = (
+    # Default backend -- used to login by username in Django admin
+    "django.contrib.auth.backends.ModelBackend",
+    # `allauth` specific authentication methods, such as login by e-mail
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
 
 WSGI_APPLICATION = 'taskbuster_project.wsgi.application'
 
