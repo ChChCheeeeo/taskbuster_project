@@ -14,6 +14,9 @@ class TestGoogleLogin(StaticLiveServerTestCase):
     """TestGoogleLogin
     """
 
+    # for google db
+    fixtures = ['allauth_fixture']
+
     def setUp(self):
         self.browser = webdriver.WebDriver()
         self.browser.implicitly_wait(3)
@@ -36,22 +39,45 @@ class TestGoogleLogin(StaticLiveServerTestCase):
     def get_full_url(self, namespace):
         return self.live_server_url + reverse(namespace)
 
+    def user_login(self):
+        # called afer clicking sign-in button
+        import json
+        with open("taskbuster_project/fixtures/google_user.json") as f:
+            credentials = json.loads(f.read())
+        for key, value in credentials.items():
+            self.get_element_by_id(key).send_keys(value)
+        for btn in ["signIn", "submit_approve_access"]:
+            self.get_button_by_id(btn).click()
+        return
+
     def test_google_login(self):
         self.browser.get(self.get_full_url("home"))
         # login present?
         google_login = self.get_element_by_id("google_login")
+        print("google login is : ")
+        print(google_login)
         # logout not present
         with self.assertRaises(TimeoutException):
             self.get_element_by_id("logout")
+            print("\nim in with statement for logout")
         # does login point to corrrect url?
         self.assertEqual(
             google_login.get_attribute("href"),
             self.live_server_url + "/accounts/google/login")
         # logout present afer clicking on logging in?
         google_login.click()
+        print("google_login.click")
         with self.assertRaises(TimeoutException):
             self.get_element_by_id("google_login")
+            print("im in with statement google login")
         # logout, is login present again?
         google_logout = self.get_element_by_id("logout")
+        print("google logout is: ")
+        print(google_logout)
         google_logout.click()
+        print("after logout click")
+        self.user_login()
+        print("after logging in with user_login")
         google_login = self.get_element_by_id("google_login")
+        print("again google_login is ")
+        print(google_login)
