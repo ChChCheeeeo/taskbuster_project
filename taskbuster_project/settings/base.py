@@ -97,7 +97,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'taskbuster_project.urls'
 
 # for django-allauth
-from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
+#from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -120,22 +120,22 @@ TEMPLATES = [
                 # this should work for django-allauth>=0.20.0-dev
                 # but for know use TEMPLATE_CONTEXT_PROCESSORS
                 # thrid party, required by allauth template tags
-                #"django.core.context_processors.request",
+                "django.core.context_processors.request",
                 # allauth specific context processors
-                #"allauth.account.context_processors.account",
-                #"allauth.socialaccount.context_processors.socialaccount",
+                "allauth.account.context_processors.account",
+                "allauth.socialaccount.context_processors.socialaccount",
             ],
         },
     },
 ]
 
-TEMPLATE_CONTEXT_PROCESSORS += (
-    # Required by allauth template tags
-    "django.core.context_processors.request",
-    # allauth specific context processors
-    "allauth.account.context_processors.account",
-    "allauth.socialaccount.context_processors.socialaccount",
-)
+#TEMPLATE_CONTEXT_PROCESSORS += (
+#     # Required by allauth template tags
+#     "django.core.context_processors.request",
+#     # allauth specific context processors
+#     "allauth.account.context_processors.account",
+#     "allauth.socialaccount.context_processors.socialaccount",
+#)
 
 AUTHENTICATION_BACKENDS = (
     # Default backend -- used to login by username in Django admin
