@@ -63,6 +63,8 @@ INSTALLED_APPS = (
     'allauth.socialaccount',
     # Login via Google
     'allauth.socialaccount.providers.google',
+    # Login via Twitter
+    'allauth.socialaccount.providers.twitter',
     # my apps
 )
 
