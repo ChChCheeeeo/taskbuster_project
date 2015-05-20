@@ -16,3 +16,12 @@ TEMPLATE_DEBUG = True
 FIXTURE_DIRS = (
     os.path.join(BASE_DIR, 'fixtures'),
 )
+
+#  This will allow us to create fixtures from this testing
+# database anytime we want to.
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
