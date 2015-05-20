@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from django.utils.translation import ugettext_lazy as _
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.conf import settings
 from django.db import models
 
 from . import managers
-
 
 class Profile(models.Model):
     """Profile
@@ -66,3 +67,21 @@ class Profile(models.Model):
 
         def __str__(self):
             return self.user.username
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_profile_for_new_user(sender, created, instance, **kwargs):
+    # Django signal.
+    # Should be read at the beginning of a Django app. Hence
+    # why in models.py. Can place many signals in separate
+    # file but import them early on.
+    # User model signal triggered every time User instance is
+    # saved.
+    # sender: the User model class
+    # created: a boolean indicating if a new User has been created
+    # instance: the User instance being saved
+    # arguments differ depending on the specific signal created. 
+    # in this case, dealing with post_save signal
+
+    if created:
+        profile = Profile(user=instance)
+        profile.save()
