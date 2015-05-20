@@ -66,6 +66,7 @@ INSTALLED_APPS = (
     # Login via Twitter
     'allauth.socialaccount.providers.twitter',
     # my apps
+    'taskbuster_project.apps.taskmanager_app',
 )
 
 # used by Django sites framework
@@ -126,8 +127,6 @@ TEMPLATES = [
                 # allauth specific context processors
                 "allauth.account.context_processors.account",
                 "allauth.socialaccount.context_processors.socialaccount",
-                # my apps
-                'taskbuster_project.apps.taskmanager_app',
             ],
         },
     },
