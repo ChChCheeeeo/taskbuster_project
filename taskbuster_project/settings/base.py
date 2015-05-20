@@ -126,6 +126,8 @@ TEMPLATES = [
                 # allauth specific context processors
                 "allauth.account.context_processors.account",
                 "allauth.socialaccount.context_processors.socialaccount",
+                # my apps
+                'taskbuster_project.apps.taskmanager_app',
             ],
         },
     },
