@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.utils.translation import ugettext_lazy as _
+from django.core.validators import RegexValidator
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.conf import settings
@@ -85,3 +86,69 @@ def create_profile_for_new_user(sender, created, instance, **kwargs):
     if created:
         profile = Profile(user=instance)
         profile.save()
+
+
+class Project(models.Model):
+    """Project
+    """
+    # From project instance, named myproject, can obtain its related 
+    # profile with:  myproject.user
+    # note attribute name defined in Project is user and not 
+    # profile.
+
+    # From profile instance, named myprofile, can obtain its related 
+    # projects with:  myprofile.projects.all() .
+    # Without specifying a related_name, by default access projects 
+    # of a profile with myprofile.project_set.all() .
+    # Note myprofile.project returns an object manager, so to obtain 
+    # project instances, use query methods, like all(), filter(), exclude(), etc. We could even call the custom methods defined in the custom ProjectManager class.
+
+
+
+    # Relations
+    user = models.ForeignKey(
+        # each project instance must relate to one User Profile (profile
+        # field mandatory) and each User Profile can be related to 0, 1, 
+        # or more projects
+        Profile,
+        related_name="projects",
+        verbose_name=_("user")
+    )
+    
+    # Attributes - Mandatory
+    name = models.CharField(
+        max_length=100,
+        verbose_name=_("name"),
+        help_text=_("Enter the project name")
+    )
+    
+    color = models.CharField(
+        max_length=7,
+        # hex colors between #000000 and #FFFFFF
+        # double pair can be abbreviated
+        # #001122 --> #012
+        default="#fff",
+        validators=[RegexValidator(
+        "(^#[0-9a-fA-F]{3}$)|(^#[0-9a-fA-F]{6}$)")],
+        verbose_name=_("color"),
+        help_text=_("Enter the hex color code, like #ccc or #cccccc")
+    )
+
+    # Attributes - Optional
+    # Object Manager
+    # Custom object manager.
+    objects = managers.ProjectManager()
+    # Custom Properties
+    # Methods
+
+    # Meta and String
+    class Meta:
+        verbose_name = _("Project")
+        verbose_name_plural = _("Projects")
+        ordering = ("user", "name")
+        # define at the db level, that for the same profile, can't
+        # write two projects to the same name. 
+        unique_together = ("user", "name")
+
+    def __str__(self):
+        return "%s - %s" % (self.user, self.name)

@@ -6,3 +6,9 @@ class ProfileManager(models.Manager):
     """ProfileManager
     """
     pass
+
+
+class ProjectManager(models.Manager):
+    """Project Manager
+    """
+    pass
